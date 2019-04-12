@@ -88,8 +88,4 @@ usual with GIT.
 
 If this package helped you reduce your time to develop something, or it solved any major problems you had, feel free give me a cup of coffee :)
 
- - [![Yandex money](https://img.shields.io/badge/Yandex-donate-yellow.svg)](https://money.yandex.ru/to/410011611678383)
-
-
-<iframe src="https://money.yandex.ru/quickpay/button-widget?targets=%D0%90%D1%84%D1%84%D1%82%D0%B0%D1%80%2C%20%D0%B6%D0%B3%D0%B8%20%D0%B8%D1%81%D1%87%D0%BE!&default-sum=200&button-text=13&yamoney-payment-type=on&button-size=s&button-color=orange&successURL=&quickpay=small&account=410011611678383&" width="127" height="25" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-
+ - [![Yandex money](https://img.shields.io/badge/Yandex-donate-yellow.svg)](https://money.yandex.ru/to/410011611678383?default-sum=200)
