@@ -1,3 +1,0 @@
-[submodule "bash-ini-parser"]
-	path = functions/bash-ini-parser
-	url = https://github.com/albfan/bash-ini-parser.git
