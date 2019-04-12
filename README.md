@@ -43,6 +43,11 @@ usual with GIT.
 
 #### Config INI
 
+  **Its very important** to config this file properly, because in several moment it
+  use delete comand `find "$DB_BACKUP_PATH" -mindepth 1 -delete > /dev/null` which
+  **can destroy your data!!!** Be very attentively when you put `DB_BACKUP_PATH` variable
+  or `DB_BACKUP_PATH_TMP`!!! I highly recommend never doing that!!!
+
   More examples you can find in [config_example.ini](https://github.com/Setest/.git-db-watcher/blob/master/config_example.ini)
 
 #### Add custom provider
