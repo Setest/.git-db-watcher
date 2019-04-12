@@ -35,7 +35,7 @@ usual with GIT.
 
   Put this files either in developer server, if it in different host.
 
-  Also if you a using git in your project, it will be better to ignore some files:
+  Also if you a using git in your project, it will be better to add changes in **.gitignore**:
   ```
   .git-db-watcher/*
   !.git-db-watcher/backups/db.sql
