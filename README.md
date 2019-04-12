@@ -28,7 +28,20 @@ usual with GIT.
   git clone https://github.com/Setest/.git-db-watcher
   ```
 
-  After it you can install git hooks, just run
+  If you using Git, you can add this project in your project as submodule:
+  ```
+  git submodule add git://github.com/Setest/.git-db-watcher.git .git-db-watcher
+  ```
+
+  Put this files either in developer server, if it in different host.
+
+  Also if you a using git in your project, it will be better to ignore some files:
+  ```
+  .git-db-watcher/*
+  !.git-db-watcher/backups/db.sql
+  ```
+
+  After it you can install git hooks in your local computer, just run
   ```
   ./install_githooks.sh
   ```
@@ -37,6 +50,8 @@ usual with GIT.
   connect with server which contains current database server.
 
   Edit **config.ini** file.
+
+  Change
 
 ### Basic Usage
 
