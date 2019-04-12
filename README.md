@@ -20,8 +20,13 @@ usual with GIT.
 
 ### Installation
 
-  You must copy [.git-db-watcher](https://github.com/Setest/.git-db-watcher) on your project which is an git work project.
-  Or just run: `git clone https://github.com/Setest/.git-db-watcher` in your working project.
+  You must copy [.git-db-watcher](https://github.com/Setest/.git-db-watcher) on your project
+  which is an git work project.
+
+  Or just run clone it to your working project.
+  ```
+  git clone https://github.com/Setest/.git-db-watcher
+  ```
 
   After it you can install git hooks, just run
   ```
