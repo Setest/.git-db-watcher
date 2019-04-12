@@ -23,7 +23,10 @@ usual with GIT.
   You must copy [.git-db-watcher](https://github.com/Setest/.git-db-watcher) on your project which is an git work project.
   Or just run: `git clone https://github.com/Setest/.git-db-watcher` in your working project.
 
-  After it you can install git hooks, just run `./install_githooks.sh`
+  After it you can install git hooks, just run
+  ```
+  ./install_githooks.sh
+  ```
 
   If you using DB on other host, i hightly recommended you create ssh keys to
   connect with server which contains current database server.
@@ -39,7 +42,10 @@ usual with GIT.
   scripts by default working with project **config.ini** file. In ever moment you can run
   each of what with additional options, which is expand current config options.
   Also you can create your own different groups of options in config file with different names
-  and run it use option `-c` or `-config`. Exp: `./import.sh --config=only_users`
+  and run it use option `-c` or `-config`. Exp:
+  ```
+  ./import.sh --config=only_users
+  ```
 
 #### Config INI
 
@@ -58,13 +64,13 @@ usual with GIT.
 
 ### FAQ
 
-  - Как экспортировать БД если она крутиться на локальном компе
-  - Хочу импортировать файл БД, но не хочу это делать через перехватчики GIT-а
-      - `./import.sh`
+  - Как экспортировать БД если она крутиться на локальном компе?
+  - Хочу импортировать файл БД, но не хочу это делать через перехватчики GIT-а?
+      - ```./import.sh```
       - `./import.sh EXPORT_FILE=site_name.sql`
       - `./import.sh DB_BACKUP_FILE=/.../../site_name.sql`
       - `./import.sh --config=site DB_BACKUP_FILE=./site_name.sql`
-  - A как производить импорт находясь на сервере:
+  - A как производить импорт находясь на сервере?
     ./db_import.sh < db_backup/db.sql
   - В разных проектах я использую CMS xxx и мне надоело каждый раз вводить данные
     для управления БД, как можно упростить процесс?
