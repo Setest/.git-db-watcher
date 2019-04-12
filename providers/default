@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# дефолтный провайдер, при создании своего провайдера оттталкивайтесь от этого
+
+
+# очистка кеша сайта, выполняется после импорта БД
+function clear_cache {
+  echo "Кеш удален!"
+}
+
+function get_db_config {
+  # перегружает настройки переданые через конфигурационный файл
+  # так как на сервере, на локальном компе и на продакшене они
+  # могут быть разные, а способ их получения одинаковый
+  DB_CONFIG_HOST=
+  DB_CONFIG_TYPE=
+  DB_CONFIG_USER=
+  DB_CONFIG_PASSWORD=
+  DB_CONFIG_CONNECTION_CHARSET=
+  DB_CONFIG_DBASE=
+  DB_CONFIG_TABLE_PREFIX=
+  DB_CONFIG_DATABASE_DSN=
+}

@@ -1,0 +1,116 @@
+#!/bin/bash
+
+function clear_cache {
+export ENV_PWD="${PATH_PWD}"
+export ENV_CONFIG_PATH="${CONFIG_INC_PATH}"
+local php_out
+# console_log err "ZZZ = ${PHP_PATH}"
+# console_log err "ZZZ = ${CONFIG_INC_PATH}"
+php_out=$($PHP_PATH << EOF
+<?php
+  error_reporting(E_ALL ^ E_NOTICE); ini_set('display_errors', true);
+  \$path = getenv("ENV_PWD");
+  \$config_inc_path = getenv("ENV_CONFIG_PATH");
+  include(\$config_inc_path);
+  define('MODX_API_MODE', true);
+  require(MODX_BASE_PATH.'index.php');
+  \$modx->getService('error', 'error.modError');
+  \$modx->setLogLevel(modX::LOG_LEVEL_ERROR);
+  \$modx->setLogTarget('ECHO');
+  \$modx->error->message = null;
+  \$modx->cacheManager->clearCache();
+  echo "Кеш сайта очищен!";
+  @session_write_close();
+  exit();
+?>
+EOF
+)
+
+echo "${php_out}"
+# console_log warn "${php_out}"
+# console_log err "XXX"
+}
+
+
+function get_db_config {
+export ENV_PWD="${PATH_PWD}"
+export ENV_CONFIG_PATH="${CONFIG_INC_PATH}"
+local php_out
+# вызывает php_info
+# php_out=$(eval "${PHP_PATH} -i")
+php_out=$($PHP_PATH << EOF
+<?php
+  \$path = getenv("ENV_PWD");
+  \$config_inc_path = getenv("ENV_CONFIG_PATH");
+  // echo "ZZZZ = ".$config_inc_path;
+  // echo "PAAAATH = ".\$config_inc_path;
+  include(\$config_inc_path);
+  //include(\$path . \$config_inc_path);
+  // include(\$path . '/public_html/core/config/config.inc.php');
+  // echo \$database_dsn;
+  \$config = [
+    'database_type' => \$database_type,
+    'database_server' => \$database_server,
+    'database_user' => \$database_user,
+    'database_password' => \$database_password,
+    'database_connection_charset' => \$database_connection_charset,
+    'dbase' => \$dbase,
+    'table_prefix' => \$table_prefix,
+    'database_dsn' => \$database_dsn,
+    'modx_core_path' => MODX_CORE_PATH,
+  ];
+
+  foreach (\$config as \$key => \$value) {
+    echo "{\$key}~{\$value}\n";
+    //echo "{\$key}~{\$value}[[[";
+  }
+?>
+EOF
+)
+
+echo "$php_out"
+#
+# for item in $php_out
+# do
+#   # IFS - разделителем мб только один символ, оставил тильду ~ маловероятно что она попадется
+#   echo "<<<${item}>>>"
+#   IFS='~' read -ra cfg <<< "$item"
+#   echo "${cfg}"
+#   config[${cfg[0]}]=${cfg[1]}
+# done
+
+
+# return config
+}
+
+php_out=$(get_db_config)
+# echo -e "$return_val"
+
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\r")
+# IFS=$(echo -en '[[[')
+# IFS='
+# '
+declare -A MODX_CONFIG
+for item in $php_out
+do
+  # echo "<<<${item}>>>"
+  # IFS - разделителем мб только один знак, оставил тильду ~ маловероятно что она попадется
+  IFS='~' read -ra cfg <<< "$item"
+  # echo "===${cfg}==="
+  MODX_CONFIG[${cfg[0]}]=${cfg[1]}
+done
+IFS=$SAVEIFS
+
+DB_CONFIG_HOST=${MODX_CONFIG[database_server]}
+DB_CONFIG_TYPE=${MODX_CONFIG[database_type]}
+DB_CONFIG_USER=${MODX_CONFIG[database_user]}
+DB_CONFIG_PASSWORD=${MODX_CONFIG[database_password]}
+DB_CONFIG_CONNECTION_CHARSET=${MODX_CONFIG[database_connection_charset]}
+DB_CONFIG_DBASE=${MODX_CONFIG[dbase]}
+DB_CONFIG_TABLE_PREFIX=${MODX_CONFIG[table_prefix]}
+DB_CONFIG_DATABASE_DSN=${MODX_CONFIG[database_dsn]}
+# DB_MODX_CORE_PATH=${MODX_CONFIG[modx_core_path]}
+
+# console_log "${MODX_CONFIG}"
+# console_log "database_server:${MODX_CONFIG[database_server]}"

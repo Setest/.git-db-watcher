@@ -1,0 +1,58 @@
+#!/bin/sh
+
+# Get the project's `.git` folder. It will return the absolute path to the `.git` folder, unless
+# the current working directory is already the project's git root path or the `.git` folder itself.
+# clear
+GIT_DIR_="$(git rev-parse --git-dir)"
+
+# Get the submodule (if any) or the main's repository root directory.
+PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
+DB_SVN_PATH='.db_watcher'
+#%%%%%% # installation template placeholder
+DB_GIT_CONTROL_PATH="${PROJECT_ROOT_DIRECTORY}/${DB_SVN_PATH}"
+CLI_IMPORT="${DB_GIT_CONTROL_PATH}/import.sh"
+# echo "PROJECT_ROOT_DIRECTORY: ${PROJECT_ROOT_DIRECTORY}";
+
+
+if [ ! -f "$CLI_IMPORT" ]
+then
+  echo "Файл импорта БД не обнаружен: $CLI_IMPORT"
+  echo "Убедитесь что проект находится в правильной папке"
+  exit 1;
+fi
+
+source ${DB_GIT_CONTROL_PATH}/function/common.sh
+source ${DB_GIT_CONTROL_PATH}/function/bash-ini-parser/bash-ini-parser
+# получаем переменные из ini
+cfg_parser ${DB_GIT_CONTROL_PATH}/config.ini
+cfg_section_hooks
+
+# echo "xxx: ${1} === ${2}";
+if [[ "${H_CHECKOUT_FORCE,,}" != "1" && "${1,,}" == "${2,,}" ]];then
+  console_log WARN "Импорт БД на одинаковых ветках запрещен настройкой H_CHECKOUT_FORCE!"
+  exit 0;
+fi
+
+# RESULT=$(eval "${CLI_IMPORT}")
+$(eval "${CLI_IMPORT}")
+err_num=$?
+# if [ -n $RESULT ]; then
+
+  if (($err_num)); then
+    console_log ERROR "[${err_num}] Возникла ошибка не могу импортировать БД!"
+    # console_log event $EVENT_NAME "\e[1mFINISHED\e[22m"
+    exit 1;
+  fi
+  # echo 'Ответ от сервера: ' $RESULT
+
+# else
+  # echo 'Не вернулся ответ'
+  # exit 1;
+  # echo $RESULTS > $DB_BACKUP_FILE
+# fi
+
+# git add $PROJECT_ROOT_DIRECTORY/.migrate/db.sql
+# git update-index --add .migrate/db.sql
+# git add -f $RESULT
+
+exit 0;
