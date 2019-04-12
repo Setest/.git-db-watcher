@@ -9,12 +9,6 @@ popd > /dev/null
 
 configuration_file=$1
 
-# Whether we are dealing with a git-submodule or not, this get the correct git file path for the
-# project root folder if run on it directory, or for the sub-module folder if run on its directory.
-# cd $PATH_PWD
-# cd ..
-
-
 GIT_DIR_="$(git rev-parse --git-dir)"
 PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 gitHooksPath="$GIT_DIR_/hooks"
@@ -96,6 +90,4 @@ else
     exit 1
 fi
 
-
-# Exits the program using a successful exit status code.
 exit 0
