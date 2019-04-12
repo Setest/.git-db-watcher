@@ -14,6 +14,18 @@ PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 gitHooksPath="$GIT_DIR_/hooks"
 TARGET='local'
 
+# source $PATH_PWD/function/common.sh
+# source $PATH_PWD/function/bash-ini-parser/bash-ini-parser
+# cfg_parser $PATH_PWD/config.ini
+# source $PATH_PWD/function/parse_args.sh
+# source $PATH_PWD/functions/vars.sh
+# source $PATH_PWD/functions/files.sh
+
+# clean_files
+# console_log warn "Change permissions"
+# find $PATH_PWD -type f -name "*.sh" -exec chmod u+x {} \;
+# chmod u+rw $DB_BACKUP_PATH
+
 source $PATH_PWD/function/common.sh
 source $PATH_PWD/function/bash-ini-parser/bash-ini-parser
 cfg_parser $PATH_PWD/config.ini

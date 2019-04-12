@@ -209,7 +209,7 @@ get_provider() {
   # if [ -n "${PROVIDER+set}" ]; then
   if [ -n "$PROVIDER" ]; then
     console_log WARN "Используется провайдер: $PROVIDER"
-    if [ ! -x "${PATH_PWD}/providers/${PROVIDER}" ]
+    if [ ! -s "${PATH_PWD}/providers/${PROVIDER}" ]
       then
         console_log ERROR "Файл провайдера '${PATH_PWD}/providers/${PROVIDER}' не существует либо отсутствуют разрешения на его выполнение! Прерываю работу"
         exit 10;

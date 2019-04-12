@@ -5,7 +5,7 @@ If you working alone or in small group of people, and create projects which work
 with mySQL databases, you can easily control of each state on every
 stage of your project. This small component working in BASH enveronment, and can
 be run in almost every web servers. Just install it, prepare config, and work as
-usual with GIT.
+usual with GIT. Or you can use it only for creating backups of your data.
 
 ---
 
@@ -31,6 +31,11 @@ usual with GIT.
   If you using Git, you can add this project in your project as submodule:
   ```
   git submodule add git://github.com/Setest/.git-db-watcher.git .git-db-watcher
+  ```
+
+  Make all script executable, can do with:
+  ```
+  find . -type f -name "*.sh" -exec chmod u+x {} \;
   ```
 
   Put this files either in developer server, if it in different host.
