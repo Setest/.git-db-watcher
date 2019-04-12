@@ -86,6 +86,9 @@ usual with GIT.
 
 ### Credits
 
+  I am very grateful to the guys who created these projects, it really helped in
+  the development of this project, and just to understand the BASH and how to cook it.
+
   * [bash_ini_parser](https://raw.githubusercontent.com/albfan/bash-ini-parser/)
   * [.versioning](https://github.com/evandrocoan/.versioning/)
 
