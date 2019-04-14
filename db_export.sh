@@ -110,11 +110,12 @@ fi
 
 
 TABLES_RESULT_LIST=''
+NO_TABLES=0
 # вычисляем пересечение массивов чтоб в запрос отправить список только нужных таблице
 if [[ -n "${DB_TABLES_INCLUDE[*]}" ]] && [[ -n "${DB_TABLES_EXCLUDE[*]}" ]]; then
   intersections_tables=()
   for item1 in ${DB_TABLES_INCLUDE[@]}; do
-    console_log warn $item1
+    # console_log warn $item1
     in_both=""
     for item2 in ${DB_TABLES_EXCLUDE[@]}; do
       [ "$item1" == "$item2" ] && in_both=Yes
@@ -123,41 +124,59 @@ if [[ -n "${DB_TABLES_INCLUDE[*]}" ]] && [[ -n "${DB_TABLES_EXCLUDE[*]}" ]]; the
         intersections_tables+=( "$item1" )
     fi
   done
-  TABLES_RESULT_LIST=" \`Tables_in_${DB_CONFIG_DBASE}\` IN (\"$(join_by '","' ${intersections_tables[@]})\")"
+  if [[ -n "${intersections_tables[*]}" ]];then
+    # console_log "okkkk"
+    TABLES_RESULT_LIST=" \`Tables_in_${DB_CONFIG_DBASE}\` IN (\"$(join_by '","' ${intersections_tables[@]})\")"
+  else
+    NO_TABLES=1
+    # console_log "faaaalse"
+  fi
 elif [[ -n "${DB_TABLES_EXCLUDE[*]}" ]]; then
   TABLES_RESULT_LIST=" \`Tables_in_${DB_CONFIG_DBASE}\` NOT IN (\"$(join_by '","' ${DB_TABLES_EXCLUDE[@]})\")"
 elif [[ -n "${DB_TABLES_INCLUDE[*]}" ]]; then
   TABLES_RESULT_LIST=" \`Tables_in_${DB_CONFIG_DBASE}\` IN (\"$(join_by '","' ${DB_TABLES_INCLUDE[@]})\")"
 fi
 
-TABLES=$(eval "$MYSQL_QUERY 'SHOW TABLES WHERE ${TABLES_RESULT_LIST} AND \`Tables_in_${DB_CONFIG_DBASE}\` LIKE \"${DB_CONFIG_TABLE_PREFIX}%\";'"2>&1 2>/dev/null);
 
-# заменяем перенос строки
-TABLES=$(sed 's/\\n/_/g' <<< $TABLES)
+if (( ! $NO_TABLES )); then
+  TABLES=$(eval "$MYSQL_QUERY 'SHOW TABLES WHERE ${TABLES_RESULT_LIST} AND \`Tables_in_${DB_CONFIG_DBASE}\` LIKE \"${DB_CONFIG_TABLE_PREFIX}%\";'"2>&1 2>/dev/null);
+  # console_log "$MYSQL_QUERY 'SHOW TABLES WHERE ${TABLES_RESULT_LIST} AND \`Tables_in_${DB_CONFIG_DBASE}\` LIKE \"${DB_CONFIG_TABLE_PREFIX}%\";'";
 
-DUMP=$(eval "${MYSQL_DUMP} ${TABLES}" 2>/dev/null);
+  # заменяем перенос строки
+  TABLES=$(sed 's/\\n/_/g' <<< $TABLES)
+  $([[ -n "${TABLES}" ]] && console_log WARN "Dump tables: ${TABLES}" || console_log warn "Dump EVERY tables")
+  # if [[ -n "${TABLES}" ]];then console_log "Dump tables: ${TABLES}"; else console_log warn "Dump EVERY tables"; fi
 
-if [[ -n "${DB_TABLES_REMOVE_INSERT}" ]]; then
-  # -e "^--" оставляет все строки кроме тех что начинаются с --
-  printf '%s\n' "${DUMP}" | grep -vE \
-    -e "^--" \
-    -e "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`" > $DB_BACKUP_FILE;
+  DUMP=$(eval "${MYSQL_DUMP} ${TABLES}" 2>/dev/null);
 
-  console_log "Удалил лишние данные из запроса и произвел запись в: ${DB_BACKUP_FILE}"
+  if [[ -n "${DB_TABLES_REMOVE_INSERT}" ]]; then
+    # -e "^--" оставляет все строки кроме тех что начинаются с --
+    printf '%s\n' "${DUMP}" | grep -vE \
+      -e "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`" > $DB_BACKUP_FILE;
 
-  TEST=$(ls -lARGh $DB_BACKUP_PATH && cat ${DB_BACKUP_FILE} | grep --color=always -P "${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}" | cut -c 1-70)
-  console_log "Проверка результата: ${TEST}"
-else
-  # -e "^--" оставляет все строки кроме тех что начинаются с --
+    console_log "Удалил лишние данные из запроса и произвел запись в: ${DB_BACKUP_FILE}"
+
+    TEST=$(ls -lARGh $DB_BACKUP_PATH && cat ${DB_BACKUP_FILE} | grep --color=always -P "${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}" | cut -c 1-70)
+    console_log "Проверка результата: ${TEST}"
+  # else
+    # -e "^--" оставляет все строки кроме тех что начинаются с --
+  fi
+
   printf '%s\n' "${DUMP}" | grep -vE \
     -e "^--" > $DB_BACKUP_FILE;
+
+else
+  console_log "Tables not set, create empty file: ${DB_BACKUP_FILE}"
+  touch $DB_BACKUP_FILE;
 fi
+# exit 1;
+
 
 # именно в этом месте чтобы подхватить глобальные переменные
 include $PATH_PWD/functions/db.sh
 
 if [[ -n "${DB_TABLES_DEFAULT[*]}" ]]; then
-  console_log WARN "Очищаю таблицы очистки ${DB_TABLES_DEFAULT[*]}"
+  console_log WARN "Очищаю таблицы очистки: ${DB_TABLES_DEFAULT[@]}"
   # console_log 'Очищаю поля у таблиц'
   clear_fields ${DB_TABLES_DEFAULT[*]}
 fi

@@ -27,7 +27,7 @@ display_usage() {
 
 }
 
-# console_log warn "обрабатываю: $#"
+# console_log warn "обрабатываю: ${#}"
 while (( "$#" )); do
   # console_log warn "обрабатываю: ${1}"
   case "$1" in

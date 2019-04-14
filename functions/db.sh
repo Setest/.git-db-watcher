@@ -5,7 +5,7 @@ function clear_fields {
   for current_table in $@; do
     tmp_current_table=${DB_CONFIG_TABLE_PREFIX}${current_table}
     TMP_FILENAME=$DB_BACKUP_PATH_TMP"${tmp_current_table}.sql"
-    console_log "Таблица: ${tmp_current_table}"
+    console_log WARN "Таблица: ${tmp_current_table}"
     # DB_TABLES_INCLUDE[$i]="${DB_CONFIG_TABLE_PREFIX}${arg}";
     # ((i += 1))
     # //////////////////////////////////////////////////////////////////////////////////////

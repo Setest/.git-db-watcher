@@ -60,7 +60,7 @@ usual with GIT. Or you can use it only for creating backups of your data.
   ```
   ./install.sh
   ```
-  If you dont needed hooks, add **-nh** key.
+  If you dont need use hooks, add **-nh** key.
 
 
   Put this files either in developer server, if it in different host. And
@@ -109,8 +109,14 @@ usual with GIT. Or you can use it only for creating backups of your data.
 
   - Как экспортировать БД если она крутиться на локальном компе?
   - Мне нужно сохранить результат на сервере в другое место:
+    ```
     ./db_export.sh --output 1>xxx.sql
-
+    ```
+  - Хочу производить экспорт на сервере используя данные своего раздела файла
+    конфигурации:
+    ```
+    ./db_export.sh -с=only_users --output 1>users.sql
+    ```
   - Хочу импортировать файл БД, но не хочу это делать через перехватчики GIT-а?
       - ```./import.sh```
       - `./import.sh EXPORT_FILE=site_name.sql`
@@ -121,10 +127,14 @@ usual with GIT. Or you can use it only for creating backups of your data.
   - В разных проектах я использую CMS xxx и мне надоело каждый раз вводить данные
     для управления БД, как можно упростить процесс?
       Для этого нужно написать свой файл провайдера по аналогии с имеющимися.
+  - Я создал задание CRON но оно не выполняется, либо кеш сайта CMS не очищается,
+    в чем может быть дело?
+    В зависимости от настроек сервера и самого задания, задания CRON могут запускаться
+    совсем в другом окружении, в котором путь к php препроцессору может отличаться
+    и как следствие, запускать совсем другую версию php не совместимую с той
+    на которой работает ваша CMS.
 
 ### TODO
-
-  !!! ./db_export.sh -с=only_users --output 1>users.sql
 
   * Пример с хранением бекапа на сервере в абсолютно другом месте
   * Пример заданния CRON
