@@ -17,7 +17,8 @@ cfg_section_server
 cfg_section_hooks
 
 # подгржаем файл глобальных переменных
-include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/parse_args.sh $@
+# source $PATH_PWD/functions/parse_args.sh
 include $PATH_PWD/functions/vars.sh
 include $PATH_PWD/functions/files.sh
 

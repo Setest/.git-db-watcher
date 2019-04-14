@@ -8,8 +8,8 @@ PATH_PWD=`pwd`
 popd > /dev/null
 
 # устанавливаем права
-find $PATH_PWD -type f -name "*.sh" -exec chmod u+x {} \;
-find $PATH_PWD -type f ! -name "*.*" -exec chmod u+x {} \;
+find $PATH_PWD -type f -name "*.sh" -exec chmod ug+x {} \;
+find $PATH_PWD -type f ! -name "*.*" -exec chmod ug+x {} \;
 
 source "${PATH_PWD}/functions/common.sh"
 include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
@@ -88,9 +88,7 @@ then
 	# Set the scripts file prefix
 	scripts_folder_prefix="hooks/${TARGET}"
 
-	# source_path="${PATH_PWD}/$scripts_folder_prefix/*"
 	source_path="${PATH_PWD}/$scripts_folder_prefix/"
-	# for hook_file in $source_path
 	# ?*.* отображает файлы без расширения
 	# find $source_path -name "*.*" -print0 | while read -d $'\0' hook_file
 	find $source_path -maxdepth 1 -type f ! -name "*.*" -print0 | while read -d $'\0' hook_file

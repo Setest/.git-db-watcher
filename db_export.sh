@@ -17,7 +17,8 @@ cfg_parser $PATH_PWD/config.ini
 cfg_section_common
 cfg_section_server
 # подгржаем файл глобальных переменных
-include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/parse_args.sh $@
+# source $PATH_PWD/functions/parse_args.sh
 include $PATH_PWD/functions/vars.sh
 include $PATH_PWD/functions/files.sh
 

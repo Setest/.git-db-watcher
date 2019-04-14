@@ -2,10 +2,22 @@ Simple database version control
 ====================
 
 If you working alone or in small group of people, and create projects which working
-with mySQL databases, you can easily control of each state on every
+with MySQL databases, you can easily control of each state on every
 stage of your project. This small component working in BASH enveronment, and can
 be run in almost every web servers. Just install it, prepare config, and work as
 usual with GIT. Or you can use it only for creating backups of your data.
+
+### Main features
+
+  You can hold under entirely control full database, or just partly:
+  - only selected tables
+  - almost all tables except severals
+  - even exclude partly fields if you need and set there default values as it
+    config it in your database.
+  - and you can create only structure of selected tables if you need to hold their empty
+  - hold different configuration in one config file
+  - create CRON jobs and run as your wish with any configuration. E.g.: you need
+    to backups only users data every day, and backup event manager journal once a week.
 
 ---
 
@@ -33,22 +45,28 @@ usual with GIT. Or you can use it only for creating backups of your data.
   git submodule add git://github.com/Setest/.git-db-watcher.git .git-db-watcher
   ```
 
-  Make all script executable, can do with:
-  ```
-  find . -type f -name "*.sh" -exec chmod u+x {} \;
-  ```
-
-  Put this files either in developer server, if it in different host.
-
   Also if you a using git in your project, it will be better to add changes in **.gitignore**:
   ```
   .git-db-watcher/*
   !.git-db-watcher/backups/db.sql
   ```
 
-  After it you can install git hooks in your local computer, just run
+  Make install script executable:
   ```
-  ./install_githooks.sh
+  chmod +x install.sh;
+  ```
+
+  After it you can install it with git hooks in your local computer, just run
+  ```
+  ./install.sh
+  ```
+  If you dont needed hooks, add **-nh** key.
+
+
+  Put this files either in developer server, if it in different host. And
+  install there with key **-nh**
+  ```
+  ./install.sh -nh
   ```
 
   If you using DB on other host, i hightly recommended you create ssh keys to
@@ -90,6 +108,9 @@ usual with GIT. Or you can use it only for creating backups of your data.
 ### FAQ
 
   - Как экспортировать БД если она крутиться на локальном компе?
+  - Мне нужно сохранить результат на сервере в другое место:
+    ./db_export.sh --output 1>xxx.sql
+
   - Хочу импортировать файл БД, но не хочу это делать через перехватчики GIT-а?
       - ```./import.sh```
       - `./import.sh EXPORT_FILE=site_name.sql`
@@ -103,6 +124,10 @@ usual with GIT. Or you can use it only for creating backups of your data.
 
 ### TODO
 
+  !!! ./db_export.sh -с=only_users --output 1>users.sql
+
+  * Пример с хранением бекапа на сервере в абсолютно другом месте
+  * Пример заданния CRON
   * Использовать lockfile для предотвращения одновременного доступа к записи на сервер
     https://linux.die.net/man/1/lockfile
   * !!! Добавить проверку и останов скрипта на все этапы выполнения, в случае если
