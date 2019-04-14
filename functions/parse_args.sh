@@ -6,7 +6,7 @@ display_usage() {
   console_log "Help for: $0"
   # console_log $(echo -e $(cat "${0}.txt"))
 
-  if [[ ! -s "${0}.txt" ]]
+  if [[ ! -r "${0}.txt" ]]
     then
       console_log ERROR "Файл помощи '${PATH_PWD}/${0}.txt' не существует"
       # exit 100;

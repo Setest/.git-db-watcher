@@ -4,6 +4,7 @@
 # for i in **/*.txt; do
 shopt -s globstar
 
+
 # вывод сообщений в консоль с окраской в зависимости
 # от переданного первого аргумента (например E или ERROR)
 # все остальные аргументы считаются информацией для вывода
@@ -158,7 +159,7 @@ function console_log {
 # останвалиет выполнение скрипта и выводит сообщение если переданы аргументы.
 # Аргументы передаются в том же порядке что и console_log
 function die {
-  console_log $@
+  console_log ERROR $@
   exit 1
 }
 # die err "ОЙ что-то пошло не так"
@@ -226,5 +227,18 @@ get_host(){
     console_log event $EVENT_NAME "\e[1mFINISHED\e[22m"
     exit 11;
     #statements
+  fi
+}
+
+include() {
+  local filepath;
+  if (($#)) && [ -x $1 ]; then
+    filepath=$1
+    shift
+    source $filepath
+  else
+    # echo "File not found or argument is empty: ${1} abort operation!" >&2;
+    die "File not found or bad permission: ${1} abort operation!"
+    exit 1;
   fi
 }

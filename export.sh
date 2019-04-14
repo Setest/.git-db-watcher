@@ -5,16 +5,16 @@ PATH_PWD=`pwd`
 popd > /dev/null
 
 EVENT_NAME="DB MIGRATE EXPORT"
-source $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 source $PATH_PWD/functions/common.sh
+include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 # получаем переменные из ini
 cfg_parser $PATH_PWD/config.ini
 cfg_section_common
 cfg_section_develop
 
-source $PATH_PWD/functions/parse_args.sh
-source $PATH_PWD/functions/vars.sh
-source $PATH_PWD/functions/files.sh
+include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/vars.sh
+include $PATH_PWD/functions/files.sh
 
 console_log event $EVENT_NAME
 

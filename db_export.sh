@@ -7,9 +7,8 @@ popd > /dev/null
 EVENT_NAME="ModX DB export"
 declare -A CONFIG
 
-
-source $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 source $PATH_PWD/functions/common.sh
+include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 
 cfg_parser $PATH_PWD/config.ini
 # исправим не правильно сформированный ini файл (не обязательно)
@@ -18,9 +17,9 @@ cfg_parser $PATH_PWD/config.ini
 cfg_section_common
 cfg_section_server
 # подгржаем файл глобальных переменных
-source $PATH_PWD/functions/parse_args.sh
-source $PATH_PWD/functions/vars.sh
-source $PATH_PWD/functions/files.sh
+include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/vars.sh
+include $PATH_PWD/functions/files.sh
 
 console_log -c=bg_yellow event $EVENT_NAME
 
@@ -154,7 +153,7 @@ else
 fi
 
 # именно в этом месте чтобы подхватить глобальные переменные
-source $PATH_PWD/functions/db.sh
+include $PATH_PWD/functions/db.sh
 
 if [[ -n "${DB_TABLES_DEFAULT[*]}" ]]; then
   console_log WARN "Очищаю таблицы очистки ${DB_TABLES_DEFAULT[*]}"

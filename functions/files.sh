@@ -6,6 +6,7 @@ function clean_files {
   then
        console_log "Result directory not exists, create it: ${DB_BACKUP_PATH}"
        mkdir $DB_BACKUP_PATH
+       chmod u+rw $DB_BACKUP_PATH
   else
     console_log WARN "Выполняю очистку: ${DB_BACKUP_PATH}"
     # console_log "Result directory exists, clear it: ${DB_BACKUP_PATH}"
@@ -15,4 +16,5 @@ function clean_files {
     # find "$DB_BACKUP_PATH" -mindepth 1
   fi
   mkdir -p $DB_BACKUP_PATH_TMP
+  chmod ug+rw $DB_BACKUP_PATH_TMP
 }

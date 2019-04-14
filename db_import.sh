@@ -8,8 +8,8 @@ EVENT_NAME="db_import"
 declare -A CONFIG
 
 
-source $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 source $PATH_PWD/functions/common.sh
+include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 
 cfg_parser $PATH_PWD/config.ini
 cfg_section_common
@@ -17,9 +17,9 @@ cfg_section_server
 cfg_section_hooks
 
 # подгржаем файл глобальных переменных
-source $PATH_PWD/functions/parse_args.sh
-source $PATH_PWD/functions/vars.sh
-source $PATH_PWD/functions/files.sh
+include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/vars.sh
+include $PATH_PWD/functions/files.sh
 
 
 console_log --color=bg_green event $EVENT_NAME

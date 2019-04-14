@@ -45,8 +45,8 @@ then
   exit 1;
 fi
 
-source ${DB_GIT_CONTROL_PATH}/function/common.sh
-source ${DB_GIT_CONTROL_PATH}/function/bash-ini-parser/bash-ini-parser
+source ${DB_GIT_CONTROL_PATH}/functions/common.sh
+source ${DB_GIT_CONTROL_PATH}/functions/bash-ini-parser/bash-ini-parser
 # получаем переменные из ini
 cfg_parser ${DB_GIT_CONTROL_PATH}/config.ini
 cfg_section_hooks
