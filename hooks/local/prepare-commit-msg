@@ -30,7 +30,7 @@ GIT_DIR_="$(git rev-parse --git-dir)"
 
 # Get the submodule (if any) or the main's repository root directory.
 PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
-DB_SVN_PATH='.db_watcher'
+DB_SVN_PATH='.git-db-watcher'
 #%%%%%% # installation template placeholder
 DB_GIT_CONTROL_PATH="${PROJECT_ROOT_DIRECTORY}/${DB_SVN_PATH}"
 EXPORT_CLI="${DB_GIT_CONTROL_PATH}/export.sh"

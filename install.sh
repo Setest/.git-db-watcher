@@ -21,6 +21,29 @@ include $PATH_PWD/functions/files.sh
 # создадим хранилище БД через запуск очистки
 clean_files
 
+#//////////////////////////////////////
+#//// Дальше идет установка хуков//////
+#//////////////////////////////////////
+
+# получим цель для какой части берутся хуки, т.к. для девелоп сервера
+# и локального клиентского компа они разные
+while (( "$#" )); do
+	case "$1" in
+		-t=*|--target=*)
+		if [[ "${1,,}" == *"="* ]]; then
+			TARGET=`echo $1 | sed -E 's/(.*=)//'`
+		fi
+		;;
+		-nh|--no-hooks)
+		console_log "Установка хуков отключена!"
+		exit 0;
+		;;
+	esac
+	shift
+done
+[[ ! -n $TARGET ]] && TARGET='local'
+console_log warn "Current hooks target: ${TARGET}"
+
 err_num=0;
 GIT_DIR_=$(eval "git rev-parse --git-dir")
 # console_log WARN "${GIT_DIR_}"
@@ -34,25 +57,6 @@ configuration_file=$1
 PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
 gitHooksPath="$GIT_DIR_/hooks"
 
-# получим цель для какой части берутся хуки, т.к. для девелоп сервера
-# и локального клиентского компа они разные
-while (( "$#" )); do
-	case "$1" in
-		-t=*|--target=*)
-		if [[ "${1,,}" == *"="* ]]; then
-			TARGET=`echo $1 | sed -E 's/(.*=)//'`
-		fi
-		;;
-		-nh*|--no-hooks*)
-		console_log "Установка хуков отключена!"
-		exit 0;
-		;;
-	esac
-	shift
-done
-
-[[ ! -n $TARGET ]] && TARGET='local'
-console_log warn "Current target: ${TARGET}"
 HOOKS_PATH="$PATH_PWD/hooks/$TARGET"
 
 # Remove the '/app/blabla/' from the $PATH_PWD variable to get its base folder name.
