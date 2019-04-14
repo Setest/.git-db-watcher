@@ -28,6 +28,7 @@ usual with GIT. Or you can use it only for creating backups of your data.
  - [FAQ](#faq)
  - [TODO](#todo)
  - [Credits](#credits)
+ - [Post scriptum](#ps)
  - [Donation](#donation)
 
 ### Installation
@@ -110,12 +111,12 @@ usual with GIT. Or you can use it only for creating backups of your data.
   - Как экспортировать БД если она крутиться на локальном компе?
   - Мне нужно сохранить результат на сервере в другое место:
     ```
-    ./db_export.sh --output 1>xxx.sql
+    ./db_export.sh --output 1>./xxx.sql
     ```
   - Хочу производить экспорт на сервере используя данные своего раздела файла
     конфигурации:
     ```
-    ./db_export.sh -с=only_users --output 1>users.sql
+    ./db_export.sh -с=only_users --output 1>./users.sql
     ```
   - Хочу импортировать файл БД, но не хочу это делать через перехватчики GIT-а?
       - ```./import.sh```
@@ -136,12 +137,8 @@ usual with GIT. Or you can use it only for creating backups of your data.
 
 ### TODO
 
-  * Пример с хранением бекапа на сервере в абсолютно другом месте
-  * Пример заданния CRON
   * Использовать lockfile для предотвращения одновременного доступа к записи на сервер
     https://linux.die.net/man/1/lockfile
-  * !!! Добавить проверку и останов скрипта на все этапы выполнения, в случае если
-    путь к source не был найден и например bash-ini-parser не смог загрузиться
   * конфигурационные параметры значения которых разделяются пробелом, исправить так
     чтобы их можно было пердавать через CLI
   * исправить отображение AUTO_INCREMENT при обработке DB_TABLES_REMOVE_INSERT
@@ -155,6 +152,12 @@ usual with GIT. Or you can use it only for creating backups of your data.
 
   * [bash_ini_parser](https://raw.githubusercontent.com/albfan/bash-ini-parser/)
   * [.versioning](https://github.com/evandrocoan/.versioning/)
+
+
+### PS
+
+  Если у вас есть идеи как можно улучшить код, пишите в коментах, а лучше форкайте
+  проект и присоедняйтесь к разработке!
 
 
 ## Donation
