@@ -5,7 +5,8 @@ If you working alone or in small group of people, and create projects which work
 with MySQL databases, you can easily control of each state on every
 stage of your project. This small component working in BASH enveronment, and can
 be run in almost every web servers. Just install it, prepare config, and work as
-usual with GIT. Or you can use it only for creating backups of your data.
+usual with GIT. Or you can use it only for creating backups of your data. Feel the 
+freedom of total control!
 
 ### Main features
 
@@ -124,7 +125,9 @@ usual with GIT. Or you can use it only for creating backups of your data.
       - `./import.sh DB_BACKUP_FILE=/.../../site_name.sql`
       - `./import.sh --config=site DB_BACKUP_FILE=./site_name.sql`
   - A как производить импорт находясь на сервере?
+    ```
     ./db_import.sh < db_backup/db.sql
+    ```
   - В разных проектах я использую CMS xxx и мне надоело каждый раз вводить данные
     для управления БД, как можно упростить процесс?
       Для этого нужно написать свой файл провайдера по аналогии с имеющимися.
@@ -137,6 +140,7 @@ usual with GIT. Or you can use it only for creating backups of your data.
 
 ### TODO
 
+  * Добавить в find delete критерий только SQL файлы!
   * Использовать lockfile для предотвращения одновременного доступа к записи на сервер
     https://linux.die.net/man/1/lockfile
   * конфигурационные параметры значения которых разделяются пробелом, исправить так
