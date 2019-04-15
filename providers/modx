@@ -38,6 +38,10 @@ export ENV_CONFIG_PATH="${CONFIG_INC_PATH}"
 local php_out
 # вызывает php_info
 # php_out=$(eval "${PHP_PATH} -i")
+php_out=$(eval "${PHP_PATH} --version")
+console_log --color=green "PHP version: ${php_out}"
+php_out=''
+
 php_out=$($PHP_PATH << EOF
 <?php
   \$path = getenv("ENV_PWD");
@@ -48,7 +52,7 @@ php_out=$($PHP_PATH << EOF
   //include(\$path . \$config_inc_path);
   // include(\$path . '/public_html/core/config/config.inc.php');
   // echo \$database_dsn;
-  \$config = [
+  \$config = array(
     'database_type' => \$database_type,
     'database_server' => \$database_server,
     'database_user' => \$database_user,
@@ -58,7 +62,7 @@ php_out=$($PHP_PATH << EOF
     'table_prefix' => \$table_prefix,
     'database_dsn' => \$database_dsn,
     'modx_core_path' => MODX_CORE_PATH,
-  ];
+  );
 
   foreach (\$config as \$key => \$value) {
     echo "{\$key}~{\$value}\n";

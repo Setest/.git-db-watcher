@@ -64,7 +64,7 @@ usual with GIT. Or you can use it only for creating backups of your data.
   If you dont need use hooks, add **-nh** key.
 
 
-  Put this files either in developer server, if it in different host. And
+  Put this files either in developer server. Change permissions and
   install there with key **-nh**
   ```
   ./install.sh -nh
@@ -150,7 +150,7 @@ usual with GIT. Or you can use it only for creating backups of your data.
   I am very grateful to the guys who created these projects, it really helped in
   the development of this project, and just to understand the BASH and how to cook it.
 
-  * [bash_ini_parser](https://raw.githubusercontent.com/albfan/bash-ini-parser/)
+  * [bash_ini_parser](https://github.com/albfan/bash-ini-parser/)
   * [.versioning](https://github.com/evandrocoan/.versioning/)
 
 

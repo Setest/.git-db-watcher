@@ -44,14 +44,19 @@ done
 [[ ! -n $TARGET ]] && TARGET='local'
 console_log warn "Current hooks target: ${TARGET}"
 
+# Whether we are dealing with a git-submodule or not, this get the correct git file path for the
+# project root folder if run on it directory, or for the sub-module folder if run on its directory.
+cd $PATH_PWD
+cd ..
+
 err_num=0;
-GIT_DIR_=$(eval "git rev-parse --git-dir")
-# console_log WARN "${GIT_DIR_}"
+GIT_DIR_=$(eval "git rev-parse --absolute-git-dir")
 err_num=$?
 if (($err_num)); then
 	console_log ERROR "[${err_num}]! GIT репозиторий не найден, хуки не будут установлены!"
 	exit $err_num;
 fi
+console_log --color=red "Project git dir: ${GIT_DIR_}"
 
 configuration_file=$1
 PROJECT_ROOT_DIRECTORY=$(git rev-parse --show-toplevel)
@@ -106,8 +111,7 @@ then
 
 	console_log -c=bg_green "\nThe githooks are successfully installed!"
 else
-	console_log err "Error! Could not to install the githooks."
-	console_log err "The git hooks folder \`$gitHooksPath\` folder is missing."
+	console_log err "Error! Could not to install the githooks. The git hooks folder \`$gitHooksPath\` folder is missing."
 	exit 1
 fi
 
