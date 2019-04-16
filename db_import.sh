@@ -9,6 +9,9 @@ declare -A CONFIG
 
 
 source $PATH_PWD/functions/common.sh
+include $PATH_PWD/functions/files.sh
+check_config
+
 include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 
 cfg_parser $PATH_PWD/config.ini
@@ -20,7 +23,6 @@ cfg_section_hooks
 include $PATH_PWD/functions/parse_args.sh $@
 # source $PATH_PWD/functions/parse_args.sh
 include $PATH_PWD/functions/vars.sh
-include $PATH_PWD/functions/files.sh
 
 
 console_log --color=bg_green event $EVENT_NAME

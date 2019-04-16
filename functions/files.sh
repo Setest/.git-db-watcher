@@ -19,3 +19,11 @@ function clean_files {
   mkdir -p $DB_BACKUP_PATH_TMP
   chmod ug+rw $DB_BACKUP_PATH_TMP
 }
+
+function check_config {
+if [ ! -x "$PATH_PWD/config.ini" ]
+  then
+    console_log ERROR "Файл конфигурации config.ini не существует или нет прав на чтение, запустите ./install.sh"
+    exit 1;
+fi
+}

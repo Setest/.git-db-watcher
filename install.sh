@@ -12,7 +12,6 @@ find $PATH_PWD -type f -name "*.sh" -exec chmod ug+x {} \;
 find $PATH_PWD -type f ! -name "*.*" -exec chmod ug+x {} \;
 
 source "${PATH_PWD}/functions/common.sh"
-include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 
 if [ ! -x "$PATH_PWD/config_default.ini" ]
   then
@@ -33,6 +32,7 @@ if [ ! -x "$PATH_PWD/config.ini" ]
 		err_num=0
 fi
 
+include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
 cfg_parser $PATH_PWD/config.ini
 include $PATH_PWD/functions/vars.sh
 include $PATH_PWD/functions/parse_args.sh

@@ -5,6 +5,9 @@ popd > /dev/null
 
 EVENT_NAME="DB MIGRATE IMPORT"
 source $PATH_PWD/functions/common.sh
+include $PATH_PWD/functions/files.sh
+check_config
+
 console_log event $EVENT_NAME
 
 include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
@@ -15,7 +18,6 @@ cfg_section_develop
 
 include $PATH_PWD/functions/parse_args.sh
 include $PATH_PWD/functions/vars.sh
-include $PATH_PWD/functions/files.sh
 
 
 if [ ! -x "$DB_BACKUP_FILE" ]
