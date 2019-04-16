@@ -5,7 +5,7 @@ If you working alone or in small group of people, and create projects which work
 with MySQL databases, you can easily control of each state on every
 stage of your project. This small component working in BASH enveronment, and can
 be run in almost every web servers. Just install it, prepare config, and work as
-usual with GIT. Or you can use it only for creating backups of your data. Feel the 
+usual with GIT. Or you can use it only for creating backups of your data. Feel the
 freedom of total control!
 
 ### Main features
@@ -140,11 +140,10 @@ freedom of total control!
 
 ### TODO
 
-  * Добавить в find delete критерий только SQL файлы!
   * Использовать lockfile для предотвращения одновременного доступа к записи на сервер
     https://linux.die.net/man/1/lockfile
   * конфигурационные параметры значения которых разделяются пробелом, исправить так
-    чтобы их можно было пердавать через CLI
+    чтобы их можно было передавать через CLI
   * исправить отображение AUTO_INCREMENT при обработке DB_TABLES_REMOVE_INSERT
   * добавить установку через COMPOSER
 
