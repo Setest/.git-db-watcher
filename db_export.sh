@@ -190,11 +190,12 @@ if [[ -n "${DB_BACKUP_PATH_TMP}" ]]; then
     cat $file >> $DB_BACKUP_FILE;
     console_log "Склеил ${file} с основным файлом"
   done
+
+  find "${DB_BACKUP_PATH_TMP}" -mindepth 1 -type f -name "*.sql" -delete
+  console_log warn "Удалил содержимое временной папки: ${DB_BACKUP_PATH_TMP}"
 fi
 
 
-find "${DB_BACKUP_PATH_TMP}" -mindepth 1 -delete
-console_log warn "Удалил временную папку: ${DB_BACKUP_PATH_TMP}"
 
 if [[ -n "${CONFIG[output]}" ]]; then
   # DB_BACKUP_FILE="$PATH_PWD/null.txt"

@@ -13,6 +13,26 @@ find $PATH_PWD -type f ! -name "*.*" -exec chmod ug+x {} \;
 
 source "${PATH_PWD}/functions/common.sh"
 include $PATH_PWD/functions/bash-ini-parser/bash-ini-parser
+
+if [ ! -x "$PATH_PWD/config_default.ini" ]
+  then
+    console_log ERROR "Файл настроек config_default.ini не существует, прерываю установку!"
+    exit 10;
+fi
+
+if [ ! -x "$PATH_PWD/config.ini" ]
+  then
+		console_log "Создаю конфиг из config_default.ini '${PATH_PWD}/providers/${PROVIDER}'"
+
+		$(eval "cp ${PATH_PWD}/config_default.ini ${PATH_PWD}/config.ini")
+		err_num=$?
+		if (($err_num)); then
+			console_log ERROR "[${err_num}] Не смог скопировать файл настроек, дальнейшая работа не возможна!"
+			exit $err_num;
+		fi
+		err_num=0
+fi
+
 cfg_parser $PATH_PWD/config.ini
 include $PATH_PWD/functions/vars.sh
 include $PATH_PWD/functions/parse_args.sh
