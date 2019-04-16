@@ -145,7 +145,9 @@ if (( ! $NO_TABLES )); then
   # console_log "$MYSQL_QUERY 'SHOW TABLES WHERE ${TABLES_RESULT_LIST} AND \`Tables_in_${DB_CONFIG_DBASE}\` LIKE \"${DB_CONFIG_TABLE_PREFIX}%\";'";
 
   # заменяем перенос строки
-  TABLES=$(sed 's/\\n/_/g' <<< $TABLES)
+  # TABLES=$(sed 's/\\n/_/g' <<< $TABLES)
+  TABLES=$(sed ':a;N;$!ba;s/\n/ /g' <<< $TABLES)
+  # console_log WARN "Dump tables: ${TABLES}"
   $([[ -n "${TABLES}" ]] && console_log WARN "Dump tables: ${TABLES}" || console_log warn "Dump EVERY tables")
   # if [[ -n "${TABLES}" ]];then console_log "Dump tables: ${TABLES}"; else console_log warn "Dump EVERY tables"; fi
 
