@@ -66,10 +66,11 @@ else
   MYSQL_IMPORT="mysql ${MYSQL_ARGS} -D ${DB_CONFIG_DBASE} < \"${F_TMP_NAME}\""
 fi
 
-console_log "${MYSQL_IMPORT}"
+# console_log "${MYSQL_IMPORT}"
 
 err_num=0;
 # IMPORT=$(eval ${MYSQL_IMPORT} 2>/dev/null);
+console_log "Запускаю импорт дампа mysql"
 IMPORT=$(eval ${MYSQL_IMPORT});
 err_num=$?
 
