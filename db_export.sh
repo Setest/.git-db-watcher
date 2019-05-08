@@ -27,9 +27,9 @@ include $PATH_PWD/functions/vars.sh
 console_log -c=bg_yellow event $EVENT_NAME
 
 if [[ -n ${DB_TABLES_REMOVE_INSERT} ]]; then
+  console_log "remove: ${DB_TABLES_REMOVE_INSERT}"
   DB_TABLES_REMOVE_INSERT="("$(sed -E 's/\s+/\|/g' <<< $DB_TABLES_REMOVE_INSERT)")"
 fi
-
 
 get_provider
 
@@ -155,13 +155,24 @@ if (( ! $NO_TABLES )); then
 
   if [[ -n "${DB_TABLES_REMOVE_INSERT}" ]]; then
     # -e "^--" оставляет все строки кроме тех что начинаются с --
-    printf '%s\n' "${DUMP}" | grep -vE \
-      -e "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`" > $DB_BACKUP_FILE;
+    # printf '%s\n' "${DUMP}" | grep -E \
 
+    DUMP=$(printf '%s\n' "${DUMP}" | grep -vE \
+      -e "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`");
+      # -e "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`" > "${DB_BACKUP_FILE}";
+      # -e "^INSERT INTO \`S_lUg6_(manager_log)\`" > $DB_BACKUP_FILE;
+    $(echo "${DUMP}" > "${DB_BACKUP_FILE}")
+
+# console_log "xxx=${DB_BACKUP_FILE}2"
+# exit 111;
+# cat /var/www/extrusion.bp/.git-db-watcher/backups/db.sql | grep -vE -e "^INSERT INTO `S_lUg6_(manager_log)`"
+
+    console_log "^INSERT INTO \`${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}\`"
     console_log "Удалил лишние данные из запроса и произвел запись в: ${DB_BACKUP_FILE}"
 
     TEST=$(ls -lARGh $DB_BACKUP_PATH && cat ${DB_BACKUP_FILE} | grep --color=always -P "${DB_CONFIG_TABLE_PREFIX}${DB_TABLES_REMOVE_INSERT}" | cut -c 1-70)
     console_log "Проверка результата: ${TEST}"
+    # exit 111;
   # else
     # -e "^--" оставляет все строки кроме тех что начинаются с --
   fi
