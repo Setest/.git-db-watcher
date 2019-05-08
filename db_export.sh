@@ -192,7 +192,7 @@ if [[ -n "${DB_BACKUP_PATH_TMP}" ]]; then
     # склеим все временные файлы с основным файлом
     # echo $(cat $f >> $DB_BACKUP_FILE);
     cat $file >> $DB_BACKUP_FILE;
-    console_log "Склеил ${file} с основным файлом"
+    console_log "Склеил ${file} с основным файлом ${DB_BACKUP_FILE}"
   done
 
   find "${DB_BACKUP_PATH_TMP}" -mindepth 1 -type f -name "*.sql" -delete

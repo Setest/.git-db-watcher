@@ -21,7 +21,7 @@ include $PATH_PWD/functions/parse_args.sh $@
 include $PATH_PWD/functions/vars.sh
 
 
-if [ ! -x "$DB_BACKUP_FILE" ]
+if [ ! -r "$DB_BACKUP_FILE" ]
   then
     console_log ERROR "Локальный файл БД '${DB_BACKUP_FILE}' не существует либо отсутствуют разрешения на его чтение! Прерываю работу"
     exit 1;

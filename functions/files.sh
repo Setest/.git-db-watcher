@@ -21,9 +21,9 @@ function clean_files {
 }
 
 function check_config {
-if [ ! -x "$PATH_PWD/config.ini" ]
+if [ ! -r "${PATH_PWD}/config.ini" ]
   then
-    console_log ERROR "Файл конфигурации config.ini не существует или нет прав на чтение, запустите ./install.sh"
+    console_log ERROR "Файл конфигурации ${PATH_PWD}/config.ini не существует или нет прав на чтение, запустите ./install.sh"
     exit 1;
 fi
 }
