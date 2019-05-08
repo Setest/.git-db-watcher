@@ -16,7 +16,8 @@ cfg_parser $PATH_PWD/config.ini
 cfg_section_common
 cfg_section_develop
 
-include $PATH_PWD/functions/parse_args.sh
+include $PATH_PWD/functions/parse_args.sh $@
+# include $PATH_PWD/functions/parse_args.sh
 include $PATH_PWD/functions/vars.sh
 
 
