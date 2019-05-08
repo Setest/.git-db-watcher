@@ -1,0 +1,2 @@
+-- UPDATE `S_lUg6_clientconfig_setting` SET `value` = 'extrusion.agro-transport.ru' WHERE `S_lUg6_clientconfig_setting`.`key` = 'http_host';
+-- UPDATE `S_lUg6_clientconfig_setting` SET `value` = 'extrusion.agro-transport.ru' WHERE `S_lUg6_clientconfig_setting`.`key` = 'c_site_url';

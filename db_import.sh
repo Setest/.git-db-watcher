@@ -84,6 +84,13 @@ if (( !$err_num && $H_CHECKOUT_CLEARCACHE )); then
   fi
 fi
 
+if (( !$err_num )) && [[ -n ${E_AFTER_IMPORT} ]] && [[ -r "${PATH_PWD}/${E_AFTER_IMPORT}" ]]; then
+  console_log "запускаю скрипт на событие AFTER_IMPORT: ${PATH_PWD}/${E_AFTER_IMPORT}"
+  MYSQL_IMPORT="mysql ${MYSQL_ARGS} -D ${DB_CONFIG_DBASE} < \"${PATH_PWD}/${E_AFTER_IMPORT}\""
+  # console_log warn $MYSQL_IMPORT
+  IMPORT=$(eval ${MYSQL_IMPORT});
+fi
+
 console_log --color=bg_green event $EVENT_NAME "\e[1mFINISHED\e[22m"
 
 exit $err_num

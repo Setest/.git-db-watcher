@@ -26,6 +26,8 @@ freedom of total control!
  - **[Basic Usage](#basic-usage)**
     - [Add custom provider](#add-custom-provider)
     - [Config INI](#config-ini)
+    - [Add custom provider](#add-custom-provider)
+    - [Events](#events)
  - [FAQ](#faq)
  - [TODO](#todo)
  - [Credits](#credits)
@@ -106,6 +108,14 @@ freedom of total control!
 для этого нужно написать свой файл провайдера по аналогии с имеющимися,
 положить его в каталог providers и прописать в INI файле `PROVIDER=[название файла]`
 
+#### Events
+
+  В настройках системы можно указать названия события и файлы содержащие скрипты SQL
+  которые будут выполнены после наступления события. Доступны:
+
+  | Event        | Parameter in config | Description                                                  |
+  |--------------|---------------------|--------------------------------------------------------------|
+  | AFTER_IMPORT | E_AFTER_IMPORT      | Вызывается при выполнении импорта, сразу после очистки кеша. |
 
 ### FAQ
 
