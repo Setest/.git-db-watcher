@@ -13,13 +13,13 @@ find $PATH_PWD -type f ! -name "*.*" -exec chmod ug+x {} \;
 
 source "${PATH_PWD}/functions/common.sh"
 
-if [ ! -x "$PATH_PWD/config_default.ini" ]
+if [ ! -r "$PATH_PWD/config_default.ini" ]
   then
     console_log ERROR "Файл настроек config_default.ini не существует, прерываю установку!"
     exit 10;
 fi
 
-if [ ! -x "$PATH_PWD/config.ini" ]
+if [ ! -r "$PATH_PWD/config.ini" ]
   then
 		console_log "Создаю конфиг из config_default.ini '${PATH_PWD}/providers/${PROVIDER}'"
 
