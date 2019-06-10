@@ -51,8 +51,12 @@ function clear_fields {
       # добавим в новый файл INSERT
       # получим данные из таблицы исключив не нужные поля
       # WITH_EXCLUDED_FIELDS=$(eval "$MYSQL_QUERY 'SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = \"${tmp_current_table}\" AND COLUMN_NAME NOT IN (\"$(join_by '\",\"' ${tmp_current_table_cf[@]})\")' 2>&1 2>/dev/null");
-      WITH_EXCLUDED_FIELDS=$(eval "$MYSQL_QUERY 'SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = \"${tmp_current_table}\" AND COLUMN_NAME NOT IN (\"$(join_by '","' ${tmp_current_table_cf[@]})\")' 2>&1 2>/dev/null");
+      WITH_EXCLUDED_FIELDS=$(eval "$MYSQL_QUERY 'SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = \"${tmp_current_table}\" AND TABLE_SCHEMA = \"${DB_CONFIG_DBASE}\" AND COLUMN_NAME NOT IN (\"$(join_by '","' ${tmp_current_table_cf[@]})\")' 2>&1 2>/dev/null");
+      # console_log "$MYSQL_QUERY 'SELECT GROUP_CONCAT(COLUMN_NAME) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = \"${tmp_current_table}\" AND TABLE_SCHEMA = \"${DB_CONFIG_DBASE}\" AND COLUMN_NAME NOT IN (\"$(join_by '","' ${tmp_current_table_cf[@]})\")'";
+
+      console_log '======'
       console_log 'Список итоговых полей: '${WITH_EXCLUDED_FIELDS}
+      console_log '======'
       SELECT_QUERY=$(eval "$MYSQL_QUERY 'SELECT ${WITH_EXCLUDED_FIELDS} FROM ${tmp_current_table};'"2>&1 2>/dev/null);
       # console_log 'SQL: '${SELECT_QUERY}
 
